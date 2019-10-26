@@ -39,7 +39,7 @@
 * 
 
 #### フレームワーク・ライブラリ・モジュール
-* 
+* JoyconLib Copyright (c) 2017 Looking Glass  https://github.com/Looking-Glass/JoyconLib
 * 
 
 #### デバイス
