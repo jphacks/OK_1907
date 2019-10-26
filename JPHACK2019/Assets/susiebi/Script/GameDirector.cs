@@ -6,12 +6,18 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     [HideInInspector] public bool tutorialIsFinished=false;
-    private bool countIsFinished=false;//  カウントダウンの判定用変数。
-    float countDown; 
-     private int A_PlayerPoints=0;//  プレイヤー型のポイント変数
-     private int B_PlayerPoints=0;//  プレイヤー型のポイント変数
-    public bool A_TragetIsCrashd=false;//  ターゲット型のターゲットbool
-    public bool B_TragetIsCrashd=false;//  ターゲット型のターゲットbool
+    [HideInInspector] public bool countIsFinished=false;//  カウントダウンの判定用変数。
+    public bool a_Point,b_Point;
+    [SerializeField] private int winPoints;
+    [SerializeField] private Vector3 a_TargetAjuster;
+    [SerializeField] private Vector3 b_TargetAjuster;
+
+     public ParentPlayer A_Player;//  プレイヤー型のポイント変数
+     public ParentPlayer B_Player;//  プレイヤー型のポイント変数
+     
+    public ParentTarget a_Target;
+    public ParentTarget b_Target;
+    private float countDown; 
     void Start()
     {
         
@@ -20,21 +26,21 @@ public class GameDirector : MonoBehaviour
     void Update()
     {
         PlaysTutorialScene();
-        if(tutorialIsFinished==false) {return;}
+        if(tutorialIsFinished==false) return;
         PlaysPlayScene();
     }
 
     //  ゲームの開始判定。チュートリアルを終えたらスタート。
     void PlaysTutorialScene()
     {
-        if(tutorialIsFinished==true) {return;}
+        if(tutorialIsFinished==true) return;
         //  チュートリアル
-        if(A_TragetIsCrashd&&B_TragetIsCrashd)
+        if(a_Target.targetIsCrashd&&b_Target.targetIsCrashd)
         {
             //OnPlayScene=true;
             tutorialIsFinished=true;
-            A_TragetIsCrashd=false;
-            B_TragetIsCrashd=false;
+            a_Target.targetIsCrashd=false;
+            b_Target.targetIsCrashd=false;
         }
     }
 
@@ -46,34 +52,46 @@ public class GameDirector : MonoBehaviour
             CountDown();
             return;
         }
-        if(A_TragetIsCrashd||B_TragetIsCrashd)
+        if(a_Target.targetIsCrashd||b_Target.targetIsCrashd)
         {
-            A_TragetIsCrashd=false;
-            B_TragetIsCrashd=false;
+            a_Target.targetIsCrashd=false;
+            b_Target.targetIsCrashd=false;
             EndsMatch();
         }
     }
 
+    //  
     void EndsMatch()
     {
+        Debug.Log("on");
 
-        if(A_PlayerPoints>=3||B_PlayerPoints>=3)
+        if(A_Player.playerPoints>=winPoints||B_Player.playerPoints>=winPoints)
         {
             SceneManager.LoadScene(1);
         }
         else {
-            // PlaysPlaySceneメソッドへ
+            // まだ２本先取されてないならPlaysPlaySceneメソッドへ
             countIsFinished=false;
         }
     }
 
     void CountDown()
     {
+        // ターゲットをリセット
+        Destroy(a_Target);
+        Destroy(b_Target);
+
         countDown+=Time.deltaTime;
         Debug.Log(countDown);
+        
         if(countDown>3.0f) 
         {
+            //  ターゲットを生成。
+            Instantiate(a_Target,A_Player.transform.position+a_TargetAjuster,A_Player.transform.rotation);
+            Instantiate(b_Target,B_Player.transform.position+b_TargetAjuster,B_Player.transform.rotation);
+
             countIsFinished=true;
+            countDown=0; // カウンドダウンリセット。
         }
     }
 }
