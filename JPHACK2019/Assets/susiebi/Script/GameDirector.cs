@@ -5,24 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
-    [HideInInspector] public bool tutorialIsFinished;
-    private bool countIsFinished;//  カウントダウンの判定用変数。
+    [HideInInspector] public bool tutorialIsFinished=false;
+    private bool countIsFinished=false;//  カウントダウンの判定用変数。
     float countDown; 
      private int A_PlayerPoints=0;//  プレイヤー型のポイント変数
      private int B_PlayerPoints=0;//  プレイヤー型のポイント変数
-    public bool A_TragetIsCrashd;//  ターゲット型のターゲットbool
-    public bool B_TragetIsCrashd;//  ターゲット型のターゲットbool
+    public bool A_TragetIsCrashd=false;//  ターゲット型のターゲットbool
+    public bool B_TragetIsCrashd=false;//  ターゲット型のターゲットbool
     void Start()
     {
-        tutorialIsFinished=false;
-        countIsFinished=false;
-        A_TragetIsCrashd=false;
-        B_TragetIsCrashd=false;
+        
     }
 
     void Update()
     {
         PlaysTutorialScene();
+        if(tutorialIsFinished==false) {return;}
         PlaysPlayScene();
     }
 
@@ -30,7 +28,6 @@ public class GameDirector : MonoBehaviour
     void PlaysTutorialScene()
     {
         if(tutorialIsFinished==true) {return;}
-
         //  チュートリアル
         if(A_TragetIsCrashd&&B_TragetIsCrashd)
         {

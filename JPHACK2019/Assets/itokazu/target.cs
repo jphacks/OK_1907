@@ -5,6 +5,7 @@ using UnityEngine;
 public class target : MonoBehaviour
 {
     public bool A_TragetIsCrashd = false;
+    public bool B_TragetIsCrashd = false;
     // Start is called before the first frame update
     void Start()
     {
