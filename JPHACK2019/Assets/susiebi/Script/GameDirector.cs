@@ -77,19 +77,20 @@ public class GameDirector : MonoBehaviour
 
     void CountDown()
     {
-        // ターゲットをリセット
-        Destroy(a_Target);
-        Destroy(b_Target);
-
         countDown+=Time.deltaTime;
         Debug.Log(countDown);
         
         if(countDown>3.0f) 
         {
+            a_Target.meshRenderer.enabled=true;
+            b_Target.meshRenderer.enabled=true;
+            
             //  ターゲットを生成。
-            Instantiate(a_Target,A_Player.transform.position+a_TargetAjuster,A_Player.transform.rotation);
-            Instantiate(b_Target,B_Player.transform.position+b_TargetAjuster,B_Player.transform.rotation);
-
+            //GameObject game1,game2;
+            //Instantiate(a_Target,A_Player.transform.position+a_TargetAjuster,A_Player.transform.rotation);
+            //Instantiate(b_Target,B_Player.transform.position+b_TargetAjuster,B_Player.transform.rotation);
+            
+            // カウンドダウンリセット。
             countIsFinished=true;
             countDown=0; // カウンドダウンリセット。
         }

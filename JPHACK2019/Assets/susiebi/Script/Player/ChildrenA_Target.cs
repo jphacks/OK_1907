@@ -5,10 +5,6 @@ using UnityEngine;
 public class ChildrenA_Target : ParentTarget
 {
     public ChildrenB_Player childrenB_Player;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -18,14 +14,18 @@ public class ChildrenA_Target : ParentTarget
     //  Bプレイヤーの剣が当たったらBプレイヤーに１ポイント。
     public override void OnCollisionEnter(Collision collision)
     {
+        if(gameDirector.countIsFinished==false&&gameDirector.tutorialIsFinished==true) return;//  カウントダウン中の処理。
         if(collision.gameObject.tag=="SwordB") 
         {
+            //  ポイント加算
             targetIsCrashd=true;
-            //meshRenderer.enabled=false; //ターゲット破壊（ターゲットを見えなくしてるだけでDestroyしてない。）
-            Instantiate(effectPrefab,transform.position,transform.rotation); // エフェクト生成。
+            meshRenderer.enabled=false; //ターゲット破壊（ターゲットを見えなくしてるだけでDestroyしてない。）
             childrenB_Player.playerPoints++;
-            Destroy(gameObject);
-
+            
+            // エフェクト生成。
+            GameObject cloneEffect;
+            cloneEffect=Instantiate(effectPrefab,transform.position,transform.rotation); 
+            Destroy(cloneEffect,3f);
         }
     }
 }
