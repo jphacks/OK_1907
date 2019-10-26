@@ -3,7 +3,7 @@
 [![Product Name](image.png)](https://www.youtube.com/watch?v=G5rULR53uMk)
 
 ## 
-### チャンバラ Tech（X → 今回皆さんが選定した好きな言葉に書き換えてください）
+### チャンバラ X Tech
 
 ### 背景（製品開発のきっかけ、課題等）
 ここに
