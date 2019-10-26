@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class target : MonoBehaviour
 {
+    public bool A_TragetIsCrashd = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,8 @@ public class target : MonoBehaviour
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Sword") 
         {
+        A_TragetIsCrashd = true;
+        Debug.Log(A_TragetIsCrashd);
         Destroy(this.gameObject);
         }
     } 
