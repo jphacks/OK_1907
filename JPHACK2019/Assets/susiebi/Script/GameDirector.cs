@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
-    [HideInInspector] public bool OnPlayScene, tutorialIsFinished;
+    [HideInInspector] public bool tutorialIsFinished;
     private bool countIsFinished;//  カウントダウンの判定用変数。
     float countDown; 
      private int A_PlayerPoints=0;//  プレイヤー型のポイント変数
@@ -14,9 +14,10 @@ public class GameDirector : MonoBehaviour
     public bool B_TragetIsCrashd;//  ターゲット型のターゲットbool
     void Start()
     {
-        OnPlayScene=false;
         tutorialIsFinished=false;
         countIsFinished=false;
+        A_TragetIsCrashd=false;
+        B_TragetIsCrashd=false;
     }
 
     void Update()
