@@ -10,7 +10,7 @@ public class JoyconSword : MonoBehaviour {
     // joyconが格納されているリスト
     private List<Joycon> m_joycons;
     // joycon
-    private Joycon m_joyconL;
+    private Joycon m_joycon_play;
     private Joycon m_joyconR;
     // joyconのボタン取得
     private Joycon.Button? m_pressedButtonL;
@@ -47,8 +47,12 @@ public class JoyconSword : MonoBehaviour {
 
         if (m_joycons == null || m_joycons.Count <= 0) return;
 
-        m_joyconL = m_joycons.Find (c => c.isLeft);
-        m_joyconR = m_joycons.Find (c => !c.isLeft);
+        // コントローラーの指定
+        if (isLeft) {
+            m_joycon_play = m_joycons.Find (c => c.isLeft);
+        } else {
+            m_joycon_play = m_joycons.Find (c => !c.isLeft);
+        }
 
         rigidbody = GetComponent<Rigidbody> ();
     }
@@ -56,7 +60,7 @@ public class JoyconSword : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
         // 傾き取得
-        Quaternion orientation = m_joyconL.GetVector ();
+        Quaternion orientation = m_joycon_play.GetVector ();
 
         if (!isSwing) {
             SwordRotation ();
@@ -67,8 +71,8 @@ public class JoyconSword : MonoBehaviour {
         //RotationTest ();
 
         // アングルリセット
-        if (m_joyconL.GetButtonUp (Joycon.Button.DPAD_DOWN)) {
-            m_joyconL.ResetAngle ();
+        if (m_joycon_play.GetButtonUp (Joycon.Button.DPAD_DOWN)) {
+            m_joycon_play.ResetAngle ();
         }
 
         //rigidbody.AddForce (accel);
@@ -77,7 +81,7 @@ public class JoyconSword : MonoBehaviour {
     }
 
     private void RotationTest () {
-        Vector3 gyro = m_joyconL.GetGyro ();
+        Vector3 gyro = m_joycon_play.GetGyro ();
         Vector3 angle = transform.localEulerAngles;
 
         angle.x += gyro.y;
@@ -95,7 +99,7 @@ public class JoyconSword : MonoBehaviour {
 
     // ジョイコンの角度と剣の角度を同期
     private void SwordRotation () {
-        Quaternion nowOrientation = m_joyconL.GetVector ();
+        Quaternion nowOrientation = m_joycon_play.GetVector ();
         // 座標軸を変換
         nowOrientation = new Quaternion (nowOrientation.y, -nowOrientation.z, -nowOrientation.x, nowOrientation.w);
 
@@ -120,7 +124,7 @@ public class JoyconSword : MonoBehaviour {
     // 剣戟を飛ばす
     private void SwordMove (Quaternion nowOrientation) {
         // 加速度取得
-        Vector3 accel = m_joyconL.GetAccel ();
+        Vector3 accel = m_joycon_play.GetAccel ();
         //Vector3 accel = m_joyconL.GetGyro ();
 
         // 振っていたら振り終わるまで振れない
@@ -150,20 +154,20 @@ public class JoyconSword : MonoBehaviour {
 
     private void VectorCalc () {
         // 加速度取得
-        Vector3 accel = m_joyconL.GetAccel ();
+        Vector3 accel = m_joycon_play.GetAccel ();
 
-        accel = m_joyconL.GetAccel ();
+        accel = m_joycon_play.GetAccel ();
 
         // 加速度取得
-        accel = m_joyconL.GetAccel ();
+        accel = m_joycon_play.GetAccel ();
     }
 
     private void ChangeReane () {
         if (isLeft) {
-            if (m_joyconL.GetButton (Joycon.Button.SL)) {
+            if (m_joycon_play.GetButton (Joycon.Button.SL)) {
                 transform.position = upRane;
                 swordNeutralPos = upRane;
-            } else if (m_joyconL.GetButton (Joycon.Button.SR)) {
+            } else if (m_joycon_play.GetButton (Joycon.Button.SR)) {
                 transform.position = downRane;
                 swordNeutralPos = downRane;
             } else {
@@ -171,10 +175,10 @@ public class JoyconSword : MonoBehaviour {
                 swordNeutralPos = neutralRane;
             }
         } else { // 右手の時
-            if (m_joyconL.GetButton (Joycon.Button.SR)) {
+            if (m_joycon_play.GetButton (Joycon.Button.SR)) {
                 transform.position = upRane;
                 swordNeutralPos = upRane;
-            } else if (m_joyconL.GetButton (Joycon.Button.SL)) {
+            } else if (m_joycon_play.GetButton (Joycon.Button.SL)) {
                 transform.position = downRane;
                 swordNeutralPos = downRane;
             } else {
