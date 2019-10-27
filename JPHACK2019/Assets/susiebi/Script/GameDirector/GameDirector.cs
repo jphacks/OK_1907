@@ -67,17 +67,15 @@ public class GameDirector : MonoBehaviour
 
         if(A_Player.playerPoints>=winPoints||B_Player.playerPoints>=winPoints)
         {
-            // リザルトシーンに誰が勝ったかを送信。
-            if(A_Player.playerPoints>=winPoints)PlayerPrefs.SetInt("winner",0);
-            else
-            {
-            PlayerPrefs.SetInt("winner",1);
-            }
+            // リザルトシーンに誰が勝ったかを伝える。
+            if(A_Player.playerPoints>=winPoints)PlayerPrefs.SetInt("winner",0); //  Aの勝利
+            else{PlayerPrefs.SetInt("winner",1);}   //  Bの勝利
 
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(1);//  リザルトシーンに移動。
         }
         else {
-            // まだ２本先取されてないならPlaysPlaySceneメソッドへ
+
+            // まだ３本先取されてないならPlaysPlayScene()へ
             countIsFinished=false;
         }
     }
@@ -91,15 +89,16 @@ public class GameDirector : MonoBehaviour
         {
             a_Target.meshRenderer.enabled=true;
             b_Target.meshRenderer.enabled=true;
+
+            // カウンドダウンリセット。
+            countIsFinished=true;
+            countDown=0;
             
             //  ターゲットを生成。
             //GameObject game1,game2;
             //Instantiate(a_Target,A_Player.transform.position+a_TargetAjuster,A_Player.transform.rotation);
             //Instantiate(b_Target,B_Player.transform.position+b_TargetAjuster,B_Player.transform.rotation);
-            
             // カウンドダウンリセット。
-            countIsFinished=true;
-            countDown=0; // カウンドダウンリセット。
         }
     }
 }

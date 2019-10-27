@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class SushiTarget : MonoBehaviour
+public class UIParent : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public TextMeshProUGUI winText;
+    public ResultGameDirector resultGameDirector;
     void Start()
     {
         
@@ -13,6 +15,6 @@ public class SushiTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        winText.text=resultGameDirector.winnerName;
     }
 }
