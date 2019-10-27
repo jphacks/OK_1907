@@ -132,7 +132,7 @@ public class JoyconSword : MonoBehaviour {
             Vector3 slashingPower = -transform.forward * accel.magnitude * 2f;
 
             rigidbody.velocity = slashingPower;
-
+            rigidbody.angularVelocity = Vector3.zero;
             isSwing = true;
             Invoke ("ResetPosition", 0.5f);
         }
@@ -170,7 +170,7 @@ public class JoyconSword : MonoBehaviour {
                 transform.position = neutralRane;
                 swordNeutralPos = neutralRane;
             }
-        } else {   // 右手の時
+        } else { // 右手の時
             if (m_joyconL.GetButton (Joycon.Button.SR)) {
                 transform.position = upRane;
                 swordNeutralPos = upRane;
