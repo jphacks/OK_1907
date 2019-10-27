@@ -210,6 +210,13 @@ public class Joycon {
             return Quaternion.identity;
         }
     }
+
+    public void ResetAngle () {
+        i_b = new Vector3 (1, 0, 0);
+        j_b = new Vector3 (0, 1, 0);
+        k_b = new Vector3 (0, 0, 1);
+    }
+
     public int Attach (byte leds_ = 0x0) {
         state = state_.ATTACHED;
         byte[] a = { 0x0 };
@@ -227,7 +234,8 @@ public class Joycon {
         a[0] = leds_;
         Subcommand (0x30, a, 1);
         Subcommand (0x40, new byte[] {
-            (imu_enabled ? (byte) 0x1 : (byte) 0x0) }, 1, true);
+            (imu_enabled ? (byte) 0x1 : (byte) 0x0)
+        }, 1, true);
         Subcommand (0x3, new byte[] { 0x30 }, 1, true);
         Subcommand (0x48, new byte[] { 0x1 }, 1, true);
         DebugPrint ("Done with init.", DebugType.COMMS);
