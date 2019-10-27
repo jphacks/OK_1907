@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameDirector : MonoBehaviour
 {
     [HideInInspector] public bool tutorialIsFinished=false;
     [HideInInspector] public bool countIsFinished=false;//  カウントダウンの判定用変数。
     public bool a_Point,b_Point;
+    public TextMeshProUGUI CountDownText;
+    public float toatleTime;
+    public float CoundDownSeconds;
+
     [SerializeField] private int winPoints;
     [SerializeField] private Vector3 a_TargetAjuster;
     [SerializeField] private Vector3 b_TargetAjuster;
+    public float countDownSeconds;
 
      public ParentPlayer A_Player;//  プレイヤー型のポイント変数
      public ParentPlayer B_Player;//  プレイヤー型のポイント変数
@@ -85,7 +91,7 @@ public class GameDirector : MonoBehaviour
         countDown+=Time.deltaTime;
         Debug.Log(countDown);
         
-        if(countDown>3.0f) 
+        if(countDown>countDownSeconds) 
         {
             a_Target.meshRenderer.enabled=true;
             b_Target.meshRenderer.enabled=true;
