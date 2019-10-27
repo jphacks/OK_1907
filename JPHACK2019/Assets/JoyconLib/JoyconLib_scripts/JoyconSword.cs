@@ -66,7 +66,7 @@ public class JoyconSword : MonoBehaviour {
             SwordRotation ();
             SwordMove (orientation);
 
-            ChangeReane ();
+            //ChangeReane ();
         }
         //RotationTest ();
 
@@ -101,10 +101,10 @@ public class JoyconSword : MonoBehaviour {
     private void SwordRotation () {
         Quaternion nowOrientation = m_joycon_play.GetVector ();
         // 座標軸を変換
-        nowOrientation = new Quaternion (nowOrientation.y, -nowOrientation.z, -nowOrientation.x, nowOrientation.w);
+        nowOrientation = new Quaternion (nowOrientation.y, nowOrientation.z, nowOrientation.x, nowOrientation.w);
 
         Vector3 eulor = nowOrientation.eulerAngles;
-        Vector3 fixEulor = new Vector3 (eulor.x, eulor.y + yAxisConf, eulor.z);
+        Vector3 fixEulor = new Vector3 (-eulor.x, eulor.y + yAxisConf, eulor.z);
         if (yAxisConf >= 60) {
             yAxisConf = 0f;
         }
@@ -133,12 +133,17 @@ public class JoyconSword : MonoBehaviour {
             // 座標軸を変換
             accel = new Vector3 (accel.z, accel.x, -accel.y);
 
-            Vector3 slashingPower = -transform.forward * accel.magnitude * 2f;
+            Vector3 slashingPower;
+            if (isLeft) {
+                slashingPower = transform.forward * accel.magnitude * 2f;
+            } else {
+                slashingPower = -transform.forward * accel.magnitude * 2f;
+            }
 
             rigidbody.velocity = slashingPower;
             rigidbody.angularVelocity = Vector3.zero;
             isSwing = true;
-            Invoke ("ResetPosition", 0.5f);
+            Invoke ("ResetPosition", 1f);
         }
     }
 
@@ -185,6 +190,13 @@ public class JoyconSword : MonoBehaviour {
                 transform.position = neutralRane;
                 swordNeutralPos = neutralRane;
             }
+        }
+    }
+
+    // 剣が当たったら戻る
+    private void OnCollisionEnter(Collision other){
+        if(other.gameObject.tag == "SwordA" ||other.gameObject.tag == "SwordB"){
+            other.gameObject.GetComponent<JoyconSword>().ResetPosition();
         }
     }
 }

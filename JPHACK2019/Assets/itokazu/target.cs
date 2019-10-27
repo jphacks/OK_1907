@@ -17,13 +17,13 @@ public class target : MonoBehaviour
         Destroy (this.gameObject, 1.0f);
     }
 */
-    void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "Sword") 
-        {
-        A_TragetIsCrashd = true;
-        Debug.Log(A_TragetIsCrashd);
-        Destroy(this.gameObject);
-        }
-    } 
+    // void OnCollisionEnter(Collision collision) {
+    //     if (collision.gameObject.tag == "Sword") 
+    //     {
+    //     A_TragetIsCrashd = true;
+    //     Debug.Log(A_TragetIsCrashd);
+    //     Destroy(this.gameObject);
+    //     }
+    // } 
    
 }
