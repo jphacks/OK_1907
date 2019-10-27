@@ -67,6 +67,13 @@ public class GameDirector : MonoBehaviour
 
         if(A_Player.playerPoints>=winPoints||B_Player.playerPoints>=winPoints)
         {
+            // リザルトシーンに誰が勝ったかを送信。
+            if(A_Player.playerPoints>=winPoints)PlayerPrefs.SetInt("winner",0);
+            else
+            {
+            PlayerPrefs.SetInt("winner",1);
+            }
+
             SceneManager.LoadScene(1);
         }
         else {
